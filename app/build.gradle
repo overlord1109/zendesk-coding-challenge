@@ -8,8 +8,10 @@ repositories {
 
 dependencies {
     implementation group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.0'
 
     testImplementation 'junit:junit:4.13.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.1.0'
 }
 
 application {
