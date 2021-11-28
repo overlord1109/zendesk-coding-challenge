@@ -1,4 +1,4 @@
-package com.zendesk.zccstudents1109.ticket;
+package com.zendesk.zccstudents1109.service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,13 +9,13 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TicketService {
+public class ZendeskApiService {
 
-    private final TicketClient client;
+    private final ZendeskApiClient client;
     private final ObjectMapper mapper;
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
-    public TicketService(TicketClient client) {
+    public ZendeskApiService(ZendeskApiClient client) {
         this.client = client;
         this.mapper = new ObjectMapper();
         configureMapper();
@@ -27,7 +27,7 @@ public class TicketService {
 
     public boolean isUserAuthenticated() throws IOException, ApiException {
        Response response = client.isAuthenticated();
-       if(response.code() == 403) {
+       if(response.code() == 403 || response.code() == 401) {
            return false;
        } else if(response.isSuccessful()) {
            return true;
@@ -58,5 +58,9 @@ public class TicketService {
         return mapper.reader().readValue(response.body().string(), PagedTicketResponse.class);
     }
 
+    public PagedTicketResponse getNextPage(String nextLink) throws IOException {
+        Response response = client.getNextPage(nextLink);
+        return mapper.reader().readValue(response.body().string(), PagedTicketResponse.class);
+    }
 
 }

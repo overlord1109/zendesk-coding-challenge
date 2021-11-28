@@ -1,4 +1,4 @@
-package com.zendesk.zccstudents1109.ticket;
+package com.zendesk.zccstudents1109.service;
 
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.OkHttpClient;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-public class TicketClient {
+public class ZendeskApiClient {
 
     private final OkHttpClient client;
     private final String email;
@@ -17,9 +17,9 @@ public class TicketClient {
     private final String baseUrl;
 
     private final String GET_TICKET = "/api/v2/tickets/";
-    private final String SHOW_SELF = "/api/v2/me/";
+    private final String SHOW_SELF = "/api/v2/users/me/";
 
-    public TicketClient(OkHttpClient client, String email, String apiToken, String baseUrl) {
+    public ZendeskApiClient(OkHttpClient client, String email, String apiToken, String baseUrl) {
         this.client = client;
         this.email = email;
         this.apiToken = apiToken;
@@ -58,4 +58,7 @@ public class TicketClient {
         return callGetApi(baseUrl + GET_TICKET + "?page[size]=" + pageSize);
     }
 
+    public Response getNextPage(String nextLink) throws IOException {
+        return callGetApi(nextLink);
+    }
 }

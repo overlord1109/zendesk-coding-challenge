@@ -1,4 +1,4 @@
-package com.zendesk.zccstudents1109.ticket;
+package com.zendesk.zccstudents1109.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,12 +26,13 @@ public class PagedTicketResponse {
         return tickets;
     }
 
-    public boolean isHasMore() {
+    public boolean hasMore() {
         return hasMore;
     }
 
     public String getNextLink() {
         return nextLink;
     }
+
 }
 

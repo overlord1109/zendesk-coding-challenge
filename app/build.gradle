@@ -20,5 +20,6 @@ application {
     mainClass = 'com.zendesk.zccstudents1109.App'
 }
 
-println "Email: " + (project.hasProperty('email') ? project.getProperty('email') : "")
-println "Token: " + (project.hasProperty('token') ? project.getProperty('token') : "")
+run{
+    standardInput = System.in
+}

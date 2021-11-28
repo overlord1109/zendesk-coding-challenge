@@ -1,9 +1,8 @@
-package com.zendesk.zccstudents1109.ticket;
+package com.zendesk.zccstudents1109.service;
 
 import com.squareup.okhttp.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TicketClientTest {
+public class ZendeskApiClientTest {
 
     private final String email = "some@email.com";
     private final String apiToken = "sometoken";
@@ -24,8 +23,8 @@ public class TicketClientTest {
     @Test
     public void getsTicketById() throws IOException, URISyntaxException {
         final String responseBody = getTicketJson();
-        TicketClient ticketClient = new TicketClient(mockHttpClient(responseBody), email, apiToken, baseUrl);
-        Response response = ticketClient.getTicketById(1);
+        ZendeskApiClient zendeskApiClient = new ZendeskApiClient(mockHttpClient(responseBody), email, apiToken, baseUrl);
+        Response response = zendeskApiClient.getTicketById(1);
         assertNotNull(response);
         assertEquals(200, response.code());
     }

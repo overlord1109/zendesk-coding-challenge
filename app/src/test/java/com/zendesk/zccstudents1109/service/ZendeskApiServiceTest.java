@@ -1,4 +1,4 @@
-package com.zendesk.zccstudents1109.ticket;
+package com.zendesk.zccstudents1109.service;
 
 import com.squareup.okhttp.*;
 import com.zendesk.zccstudents1109.exception.ApiException;
@@ -14,44 +14,44 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TicketServiceTest {
+public class ZendeskApiServiceTest {
 
     private final String baseUrl = "https://someurl.com";
 
     @Test
     public void getsTicketById() throws IOException, ApiException {
-        TicketClient mockClient = Mockito.mock(TicketClient.class);
+        ZendeskApiClient mockClient = Mockito.mock(ZendeskApiClient.class);
         Mockito.when(mockClient.getTicketById(Mockito.anyLong())).thenReturn(mockResponse(200, readResourceIntoString("data/ticket.json")));
 
-        TicketService ticketService = new TicketService(mockClient);
-        Ticket ticket = ticketService.getTicketById(1L);
+        ZendeskApiService zendeskApiService = new ZendeskApiService(mockClient);
+        Ticket ticket = zendeskApiService.getTicketById(1L);
         assertNotNull(ticket);
         assertEquals(1L, ticket.getId());
     }
 
     @Test
     public void throwsExceptionForMissingTicket() throws IOException {
-        TicketClient mockClient = Mockito.mock(TicketClient.class);
+        ZendeskApiClient mockClient = Mockito.mock(ZendeskApiClient.class);
         Mockito.when(mockClient.getTicketById(Mockito.anyLong())).thenReturn(mockResponse(404, "{\"error\":\"RecordNotFound\",\"description\":\"Not found\"}"));
-        TicketService ticketService = new TicketService(mockClient);
-        assertThrows(ApiException.class, () -> ticketService.getTicketById(2L));
+        ZendeskApiService zendeskApiService = new ZendeskApiService(mockClient);
+        assertThrows(ApiException.class, () -> zendeskApiService.getTicketById(2L));
     }
 
     @Test
     public void getsPagedTickets() throws IOException {
-        TicketClient mockClient = Mockito.mock(TicketClient.class);
+        ZendeskApiClient mockClient = Mockito.mock(ZendeskApiClient.class);
         Mockito.when(mockClient.getPagedTickets(Mockito.anyInt())).thenReturn(mockResponse(200, readResourceIntoString("data/paged_tickets.json")));
-        TicketService service = new TicketService(mockClient);
+        ZendeskApiService service = new ZendeskApiService(mockClient);
         PagedTicketResponse pagedTicketResponse = service.getPagedTickets();
-        assertTrue(pagedTicketResponse.isHasMore());
+        assertTrue(pagedTicketResponse.hasMore());
         assertEquals(25, pagedTicketResponse.getTickets().size());
     }
 
     @Test
     public void authenticatesUser() throws IOException, ApiException {
-        TicketClient mockClient = Mockito.mock(TicketClient.class);
+        ZendeskApiClient mockClient = Mockito.mock(ZendeskApiClient.class);
         Mockito.when(mockClient.isAuthenticated()).thenReturn(mockResponse(200, ""));
-        TicketService service = new TicketService(mockClient);
+        ZendeskApiService service = new ZendeskApiService(mockClient);
         assertTrue(service.isUserAuthenticated());
     }
 
