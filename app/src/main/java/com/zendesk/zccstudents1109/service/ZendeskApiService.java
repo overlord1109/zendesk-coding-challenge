@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Wrapper on client to marshal and unmarshal response into POJOs
+ **/
 public class ZendeskApiService {
 
     private final ZendeskApiClient client;

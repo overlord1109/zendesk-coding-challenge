@@ -7,12 +7,13 @@ import com.zendesk.zccstudents1109.service.ZendeskApiService;
 
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
+/**
+ * Looping CLI that takes input from user
+ **/
 public class CommandLineInterface {
 
     private final Scanner in;
-    private final Logger logger = Logger.getLogger(this.getClass().getName());
     private final ZendeskApiService service;
     private final TicketTableFormatter formatter;
 
@@ -45,6 +46,9 @@ public class CommandLineInterface {
         }
     }
 
+    /**
+     * Validation to prevent NumberFormatException
+     **/
     private long getValidNumberFromUser() {
         String idString;
         boolean isValidNumber;
@@ -59,6 +63,9 @@ public class CommandLineInterface {
         return Long.parseLong(idString);
     }
 
+    /**
+     * Gets first page and subsequently follows `next` page links to display page-wise output
+     **/
     private void pageThroughAllTickets() throws IOException {
         PagedTicketResponse pagedTickets = service.getPagedTickets();
         formatter.printTable(pagedTickets);

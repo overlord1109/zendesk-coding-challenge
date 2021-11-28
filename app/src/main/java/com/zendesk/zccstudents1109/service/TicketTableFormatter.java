@@ -1,5 +1,9 @@
 package com.zendesk.zccstudents1109.service;
 
+
+/**
+ * Formats and prints a page of tickets as a table
+ **/
 public class TicketTableFormatter {
 
     public void printTable(PagedTicketResponse response) {

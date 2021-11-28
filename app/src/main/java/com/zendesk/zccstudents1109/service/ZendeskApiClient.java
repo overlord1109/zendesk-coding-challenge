@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+/**
+ * Client to call Zendesk Ticket and User APIs
+**/
 public class ZendeskApiClient {
 
     private final OkHttpClient client;
