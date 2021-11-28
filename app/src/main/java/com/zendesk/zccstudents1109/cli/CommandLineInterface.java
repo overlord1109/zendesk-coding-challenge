@@ -30,27 +30,10 @@ public class CommandLineInterface {
                 System.out.println("Please enter:\n1 to view a ticket\n2 to view all tickets\nq to quit");
                 String s = in.nextLine();
                 if ("1".equals(s)) {
-                    String idString;
-                    boolean matches;
-                    do {
-                        System.out.println("Enter ticket id:");
-                        idString = in.nextLine();
-                        matches = idString.matches("\\d+");
-                        if(!matches) {
-                            System.out.println("Please enter a valid number");
-                        }
-                    } while (!matches);
-                    long id = Long.parseLong(idString);
+                    long id = getValidNumberFromUser();
                     System.out.println(service.getTicketById(id));
                 } else if ("2".equals(s)) {
-                    PagedTicketResponse pagedTickets = service.getPagedTickets();
-                    formatter.printTable(pagedTickets);
-                    while (pagedTickets.hasMore()) {
-                        System.out.println("Press any key to view more tickets");
-                        in.nextLine();
-                        pagedTickets = service.getNextPage(pagedTickets.getNextLink());
-                        formatter.printTable(pagedTickets);
-                    }
+                    pageThroughAllTickets();
                 } else if ("q".equals(s)) {
                     running = false;
                 }
@@ -59,6 +42,31 @@ public class CommandLineInterface {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Something went wrong, please try again later");
+        }
+    }
+
+    private long getValidNumberFromUser() {
+        String idString;
+        boolean isValidNumber;
+        do {
+            System.out.println("Enter ticket id:");
+            idString = in.nextLine();
+            isValidNumber = idString.matches("\\d+");
+            if(!isValidNumber) {
+                System.out.println("Please enter a valid number");
+            }
+        } while (!isValidNumber);
+        return Long.parseLong(idString);
+    }
+
+    private void pageThroughAllTickets() throws IOException {
+        PagedTicketResponse pagedTickets = service.getPagedTickets();
+        formatter.printTable(pagedTickets);
+        while (pagedTickets.hasMore()) {
+            System.out.println("Press any key to view more tickets");
+            in.nextLine();
+            pagedTickets = service.getNextPage(pagedTickets.getNextLink());
+            formatter.printTable(pagedTickets);
         }
     }
 }

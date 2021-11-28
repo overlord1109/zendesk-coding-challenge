@@ -17,7 +17,7 @@ public class App {
 
     public static void main(String[] args) {
         Properties props = new PropertiesLoader().loadProperties("application.properties");
-        System.out.println("\n\nWelcome to ticket viewer!\n");
+        System.out.println("\n\nWelcome to Zendesk ticket viewer!\n");
 
         if(args.length != 2) {
             System.out.println("Please enter correct number of arguments.");

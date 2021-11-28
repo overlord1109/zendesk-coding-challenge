@@ -28,10 +28,6 @@ public class Ticket {
         return id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public String getStatus() {
         return status;
     }
