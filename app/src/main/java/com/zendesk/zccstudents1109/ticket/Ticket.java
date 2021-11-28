@@ -5,9 +5,14 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName("ticket")
 public class Ticket {
 
-    private int id;
+    private long id;
+    private String description;
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

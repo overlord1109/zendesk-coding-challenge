@@ -1,8 +1,9 @@
 package com.zendesk.zccstudents1109.ticket;
 
 import com.squareup.okhttp.*;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -10,6 +11,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TicketClientTest {
 
@@ -21,9 +25,9 @@ public class TicketClientTest {
     public void getsTicketById() throws IOException, URISyntaxException {
         final String responseBody = getTicketJson();
         TicketClient ticketClient = new TicketClient(mockHttpClient(responseBody), email, apiToken, baseUrl);
-        Ticket ticket = ticketClient.getTicketById(1);
-        Assert.assertNotNull(ticket);
-        Assert.assertEquals(1, ticket.getId());
+        Response response = ticketClient.getTicketById(1);
+        assertNotNull(response);
+        assertEquals(200, response.code());
     }
 
     private String getTicketJson() throws IOException, URISyntaxException {

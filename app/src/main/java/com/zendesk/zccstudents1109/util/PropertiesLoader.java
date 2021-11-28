@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class PropertiesLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(PropertiesLoader.class.getName());
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
     private final Properties props;
 
     public PropertiesLoader() {
@@ -22,7 +22,7 @@ public class PropertiesLoader {
         try {
             this.props.load(resourceStream);
         } catch (IOException | NullPointerException e) {
-            LOGGER.log(Level.ALL, "Exception while loading properties from resource file {}", propsPath);
+            logger.log(Level.ALL, "Exception while loading properties from resource file " + propsPath);
             return null;
         }
         return props;
